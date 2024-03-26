@@ -104,7 +104,7 @@ def log_file(path, arcname, comp_type=None):
 def pack(args):
     nocompress_file = args.directory / '.nocompress'
 
-    if 1:
+    if args.disable_zstandard == False:
         comp_type = ZIP_ZSTANDARD
         comp_level = 20
     else:
@@ -180,6 +180,11 @@ def main(args):
     )
 
     add_common_args(parser, depfile=True)
+
+    parser.add_argument('--disable_zstandard',
+        action='store_true',
+        default=False,
+    )
 
     args = parser.parse_args(args[1:])
     pack(args)

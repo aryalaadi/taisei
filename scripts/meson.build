@@ -114,7 +114,11 @@ upkeep_command = [upkeep_script, common_taiseilib_args]
 upkeep_target = run_target('upkeep', command: upkeep_command)
 
 pack_script = find_program(files('pack.py'))
-pack_command = [pack_script, common_taiseilib_args]
+if build_machine.cpu() == 'i686'
+    pack_command = [pack_script, '--disable_zstandard', common_taiseilib_args]
+else
+    pack_command = [pack_script, common_taiseilib_args]
+endif
 
 glob_script = find_program(files('glob-search.py'))
 glob_command = [glob_script]
